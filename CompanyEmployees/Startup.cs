@@ -1,9 +1,11 @@
 using CompanyEmployees.Extensions;
+using Entities;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -21,8 +23,7 @@ namespace CompanyEmployees
     {
         public Startup(IConfiguration configuration)
         {
-            LogManager.LoadConfiguration(string.Concat(Directory.GetCurrentDirectory(),
-"/nlog.config"));
+            LogManager.LoadConfiguration(string.Concat(Directory.GetCurrentDirectory(),"/nlog.config"));
             Configuration = configuration;
 
         }
@@ -35,8 +36,11 @@ namespace CompanyEmployees
             services.ConfigureCors();
             services.ConfigureIISIntegration();
             services.ConfigureLoggerService();
+            services.ConfigureRepositoryManager();
 
             services.AddControllers();
+            services.ConfigureSqlContext(Configuration);
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
