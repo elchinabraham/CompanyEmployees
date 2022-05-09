@@ -40,6 +40,7 @@ namespace CompanyEmployees
 
             services.AddControllers();
             services.ConfigureSqlContext(Configuration);
+            services.AddAutoMapper(typeof(Startup));
 
         }
 
